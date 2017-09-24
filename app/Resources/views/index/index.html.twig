@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block topNavigation %}
+    {% include 'parts/top-navigation.html.twig' %}
+{% endblock %}
+
+{% block container %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row b-section-wrapper">
+            <!-- /.col-lg-3 -->
+            <div class="col-lg-12">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                                <div class="card b-view h-100 b-section-wrapper-no-top-padding b-section b-post-card">
+                                    <a href="#"><img class="card-img-top b-post-card-meta-image" src="{{ asset('img/uncharted.jpg') }}" alt=""></a>
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-12 b-col-no-padding">
+                                                <span class="b-post-card-meta-title">
+                                                    <a href="#">New Uncharted! What a game.New Uncharted!</a>
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 b-col-no-padding">
+                                                    <div class="b-post-card-meta-source" >
+                                                        By <a href="#">Mudja</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer small-text" style="background-color: white;">
+                                    <span class="b-post-card-meta-footer-group">
+                                        <img src="{{ asset('img/ic-reader.png') }}" class="b-post-card-meta-footer-icon"/>
+                                        <span class="b-post-card-meta-icon-meta">32</span>
+                                    </span>
+                                    <span class="b-post-card-meta-footer-group">
+                                        <img src="{{ asset('img/ic-star-gray.png') }}" class="b-post-card-meta-footer-icon"/>
+                                        <span class="b-post-card-meta-icon-meta">4.3</span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                </div>
+
+                <hr>
+
+            </div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block topNavigation %}
+    {% include 'parts/top-navigation.html.twig' %}
+{% endblock %}
+
+{% block additionalCSS %}
+    <link href="{{ asset('css/jquery.guillotine.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block container %}
+
+    <div class="b-profile-card">
+
+        <div class="row b-section-wrapper b-section b-vertical-center">
+            <div class="col-lg-2">
+                <img src="{{ asset('img/mudja-profile.jpg') }}" class="b-profile-card-meta-picture b-section-clickable" onclick="showSetPictureForm()"/>
+
+            </div>
+            <div class="col-lg-10">
+            <span class="b-profile-card-meta-name">
+                Marko Ognjenovic
+            </span>
+            </div>
+
+        </div>
+
+        <div class="row b-midd-section-title-wrapper">
+            <div class="col-lg-12">
+                <span class="b-midd-section-title">blogs</span>
+            </div>
+        </div>
+
+        <div class="row b-section-wrapper b-section b-section-clickable b-btn-section" onclick="showCreateBlogForm()">
+            <div class="col-lg-12 text-center">
+                <img src="{{ asset('img/ic-plus.png') }}" class="b-create-icon"/>
+                <span class="b-create-icon-meta">Create blog</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="createBlogForm" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="b-modal-title">Create blog</span>
+                    <button type="button" class="close b-section-clickable" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img src="{{ asset('img/pick-blog-image.jpg') }}" id="coverImageContainer"/>
+                                <img src="{{ asset('img/ic-add-image.png') }}" onclick="chooseCover()" class="b-blog-cover-add-icon b-section-clickable"
+                                     style="position: absolute; top: 0;"/>
+                            </div>
+                        </div>
+                        <form action="{{ path('login') }}" method="post" style="margin-top: 20px">
+
+                            <div style="height:0;overflow:hidden">
+                                <input type="file" id="coverImage" name="coverImage" onchange="placeCoverImage(this)" />
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" name="_username" id="blogName" placeholder="Blog name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled">Create</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="setPictureForm" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="b-modal-title">Choose picture</span>
+                    <button type="button" class="close b-section-clickable" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img src="{{ asset('img/pick-blog-image.jpg') }}" id="profilePictureContainer"/>
+                                <img src="{{ asset('img/ic-add-image.png') }}" onclick="choosePicture()" class="b-blog-cover-add-icon b-section-clickable"
+                                     style="position: absolute; top: 0;"/>
+                            </div>
+                        </div>
+
+                        <form action="{{ path('login') }}" method="post" style="margin-top: 20px">
+
+                            <div style="height:0;overflow:hidden">
+                                <input type="file" id="profilePicture" name="coverImage" onchange="placeProfilePicture(this)" />
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled b-btn-full-width">Done</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block additionalJavascript %}
+    <script src="{{ asset('js/jquery.guillotine.js') }}"></script>
+    <script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+    <script>
+        bindCropperToCover();
+        bindCropperToProfilePicture();
+    </script>
+{% endblock %}
