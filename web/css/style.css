@@ -440,6 +440,7 @@ footer .copyright {
     padding: 11px 11px;
     border: 1px solid #3d314e;
     font-family: Roboto, Arial, sans-serif;
+    white-space: nowrap;
 }
 
 .b-btn:hover {

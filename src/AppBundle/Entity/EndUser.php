@@ -22,8 +22,8 @@ use JMS\Serializer\Annotation as SRL;
  */
 class EndUser implements AdvancedUserInterface, \Serializable
 {
-
     /**
+     * @Assert\Type("integer")
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -31,56 +31,41 @@ class EndUser implements AdvancedUserInterface, \Serializable
      */
     private $user_id;
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
      * @Assert\Email(message="Provided email is not valid", checkMX = true)
+     * @ORM\Column(type="string", unique=true)
      * @SRL\Type("string")
      */
     private $username;
     /**
+     * @Assert\Type("string")
      * @ORM\Column(type="string")
      * @SRL\Type("string")
      * @SRL\Exclude
      */
     private $password;
     /**
+     * @Assert\Regex("/^[A-Za-z]{2,25}$/")
      * @ORM\Column(type="string")
      * @SRL\Type("string")
      */
     private $first_name;
     /**
+     * @Assert\Regex("/^[A-Za-z]{2,25}$/")
      * @ORM\Column(type="string")
      * @SRL\Type("string")
      */
     private $last_name;
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
+     * @Assert\Regex("/^.{6,30}$/")
      * @SRL\Exclude
      */
     private $plainPassword;
     /**
-     * @ORM\Column(type="string")
-     * @SRL\Type("string")
-     */
-    private $phone_number;
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $is_active = 1;
+    private $is_enabled = 1;
     /**
-     * @ORM\OneToMany(targetEntity="Marker", mappedBy="user", cascade={"persist", "remove"})
-     * @SRL\Type("ArrayCollection<AppBundle\Entity\Marker>")
-     * @SRL\Groups({"users_and_markers"})
-     */
-    private $markers;
-    /**
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="user", cascade={"persist", "remove"})
-     * @SRL\Type("ArrayCollection<AppBundle\Entity\Item>")
-     * @SRL\Groups({"users_and_items"})
-     */
-    private $items;
-    /**
+     * @Assert\DateTime()
      * @ORM\Column(type="datetime")
      * @SRL\Type("DateTime")
      */
@@ -140,14 +125,6 @@ class EndUser implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return mixed
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phone_number;
-    }
-
-    /**
      * @param mixed $username
      */
     public function setUsername($username)
@@ -174,63 +151,14 @@ class EndUser implements AdvancedUserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @param mixed $phone_number
-     */
-    public function setPhoneNumber($phone_number)
-    {
-        $this->phone_number = $phone_number;
-        return $this;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * @param mixed $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMarkers()
-    {
-        return $this->markers;
-    }
-
-    /**
-     * @param mixed $markers
-     */
-    public function setMarkers($markers)
-    {
-        $this->markers = $markers;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsActive()
-    {
-        return $this->is_active;
-    }
 
     /**
      * @param mixed $is_active
      */
-    public function setIsActive($is_active)
+    public function setIsEnabled($is_enabled)
     {
-        $this->is_active = $is_active;
+        $this->is_enabled = $is_enabled;
         return $this;
     }
 
@@ -302,7 +230,7 @@ class EndUser implements AdvancedUserInterface, \Serializable
 
     public function isEnabled()
     {
-        return $this->is_active;
+        return $this->is_enabled;
     }
 
     public function serialize()

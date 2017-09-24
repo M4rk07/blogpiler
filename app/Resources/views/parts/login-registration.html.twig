@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <img src="{{ asset('img/bnlogo-darkred.png') }}" class="b-login-form-logo"/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <span class="b-login-form-brand">
+            Blogpiler
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center b-login-form-quote" style="padding-bottom: 20px; padding-top: 20px">
+        <blockquote>
+            The next best thing.
+        </blockquote>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="login" role="tabpanel">
+        <form action="{{ path('login') }}" method="post">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="email" class="form-control" name="_username" id="log_username" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="password" class="form-control" name="_password" id="log_password" placeholder="Password">
+                </div>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled b-btn-full-width">Log In</button>
+                </div>
+            </div>
+            <div id="loginFormMessage">
+                {% if error_message is defined and error_message != null %}
+                    <div class="alert alert-danger">{{ error_message }}</div>
+                {% endif %}
+                {% if success_message is defined and success_message != null %}
+                    <div class="alert alert-success">{{ success_message }}</div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane" id="register" role="tabpanel">
+        <form action="{{ path('user_registration') }}" method="post" onsubmit="return validateRegistrationForm()">
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="rg_firstName" id="rg_firstName" placeholder="First name" required>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="rg_lastName" id="rg_lastName" placeholder="Last name" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="email" class="form-control" name="rg_email" id="rg_email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" name="rg_password" id="rg_password" placeholder="Password" required>
+                </div>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" name="rg_repeatedPassword" id="rg_repeatedPassword" placeholder="Repeat password" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled b-btn-full-width">Register</button>
+                </div>
+            </div>
+
+            <div id="registrationFormMessage"></div>
+
+        </form>
+    </div>
+</div>

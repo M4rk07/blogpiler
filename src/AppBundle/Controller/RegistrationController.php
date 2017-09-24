@@ -28,23 +28,24 @@ use Symfony\Component\Serializer\Serializer;
 
 class RegistrationController extends Controller
 {
-
     /**
      * @Route("/register", name="user_registration")
      * @Method({"POST"})
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $username = $request->request->get("email");
-        $plainPassword = $request->request->get("password");
-        $phoneNumber = $request->request->get("phoneNumber");
-        $firstName = $request->request->get("firstName");
-        $lastName = $request->request->get("lastName");
+        $username = $request->request->get("rg_email");
+        $plainPassword = $request->request->get("rg_password");
+        $firstName = $request->request->get("rg_firstName");
+        $lastName = $request->request->get("rg_lastName");
+
+        if(empty($username) || empty($plainPassword) || empty($firstName) || empty($lastName)) {
+            throw new \Exception();
+        }
 
         $user = new EndUser();
         // 3) Encode the password (you could also do this via Doctrine listener)
         $user->setPlainPassword($plainPassword)
-            ->setPhoneNumber($phoneNumber)
             ->setUsername($username)
             ->setFirstName($firstName)
             ->setLastName($lastName);
@@ -68,7 +69,7 @@ class RegistrationController extends Controller
         // maybe set a "flash" success message for the user
 
         // replace this example code with whatever you need
-        return $this->render('root/index.html.twig', [
+        return $this->render('login/login.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'login' => true,
             'last_username' => $username,
