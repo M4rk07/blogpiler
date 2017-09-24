@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\EndUser;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Marker;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -63,7 +64,16 @@ class RegistrationController extends Controller
         // 4) save the User!
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
-        $em->flush();
+
+        try {
+            $em->flush();
+        } catch(UniqueConstraintViolationException $e) {
+            return $this->render('login/login.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+                'login' => false,
+                'error_message' => "User with that email already exists."
+            ]);
+        }
 
         // ... do any other work - like sending them an email, etc
         // maybe set a "flash" success message for the user
@@ -72,7 +82,6 @@ class RegistrationController extends Controller
         return $this->render('login/login.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'login' => true,
-            'last_username' => $username,
             'success_message' => "Thank you for registration! You can log in now."
         ]);
     }
