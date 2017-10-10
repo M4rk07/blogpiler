@@ -14,12 +14,12 @@ class FileUploader
         $this->targetDir = $targetDir;
     }
 
-    public function uploadProfilePicture(UploadedFile $file, $pictureData, $userId)
+    public function uploadProfilePicture(UploadedFile $file, $pictureMeta, $location, $userId)
     {
         $fileName = $userId.'.'.$file->guessExtension();
 
-        $this->cropAndSave($pictureData->x, $pictureData->y, $pictureData->w, $pictureData->h, $pictureData->scale,
-            $file->getRealPath(), $this->getTargetDir() . '/' . $fileName);
+        $this->cropAndSave($pictureMeta->x, $pictureMeta->y, $pictureMeta->w, $pictureMeta->h, $pictureMeta->scale,
+            $file->getRealPath(), realpath($location . '/' . $fileName));
 
         return $fileName;
     }

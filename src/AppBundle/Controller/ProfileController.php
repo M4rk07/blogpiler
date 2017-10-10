@@ -49,14 +49,15 @@ class ProfileController extends Controller
         $pictureFile = $request->files->get("profilePicture");
         $pictureData = json_decode($request->request->get('pictureData'));
 
-        $fileName = $fileUploader->uploadProfilePicture($pictureFile, $pictureData, $user->getUserId());
+        $fileName = $fileUploader->uploadProfilePicture($pictureFile, $pictureData,
+            $this->get('kernel')->getProjectDir().$this->getParameter('profile_picture_url'), $user->getUserId());
 
         $em = $this->getDoctrine()->getManager();
         $user->setProfilePicture($fileName);
         $em->persist($user);
         $em->flush();
 
-        return new JsonResponse(array('data' => $pictureData), 200);
+        return new JsonResponse(array('picture_url' => '/blogpiler'.$this->getParameter('profile_picture_url').'/'.$fileName), 200);
     }
 
 }

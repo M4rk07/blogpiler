@@ -155,11 +155,11 @@ function uploadProfilePicture() {
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if(this.status == 200) {
-        alert(xhr.responseText);
+        var rspData = JSON.parse(xhr.responseText);
         $("#closePictureFormBtn").click();
         var reader = new FileReader();
         reader.onload = function (e) {
-          $("#profilePicture").attr("src", e.target.result);
+          $("#profilePicture").attr("src", rspData.picture_url);
         };
         reader.readAsDataURL(picture);
       } else {
