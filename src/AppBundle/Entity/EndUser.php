@@ -71,6 +71,12 @@ class EndUser implements AdvancedUserInterface, \Serializable
      */
     private $date_time;
 
+    /**
+     * @ORM\Column(type="string")
+     * @SRL\Type("string")
+     */
+    private $profile_picture;
+
     public function __construct() {
         $this->date_time = new \DateTime();
     }
@@ -211,6 +217,15 @@ class EndUser implements AdvancedUserInterface, \Serializable
     {
         $this->last_name = $last_name;
         return $this;
+    }
+
+    public function setProfilePicture($profile_picture) {
+        $this->profile_picture = $profile_picture;
+        return $this;
+    }
+
+    public function getProfilePicture() {
+        return '/blogpiler/web/img/profile/'.$this->profile_picture;
     }
 
     public function isAccountNonExpired()

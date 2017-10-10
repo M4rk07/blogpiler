@@ -25,7 +25,8 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.3.*",
         "twig/twig": "^1.0||^2.0",
-        "jms/serializer": "^1.7"
+        "jms/serializer": "^1.7",
+        "intervention/image": "2.4.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

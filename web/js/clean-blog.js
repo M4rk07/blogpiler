@@ -79,20 +79,20 @@ function chooseCover() {
 }
 
 function choosePicture() {
-  $("#profilePicture").click();
+  $("#profilePictureFile").click();
 }
 
 
-var coverPicture = $('#coverImageContainer');
-var profilePicture = $('#profilePictureContainer');
+var coverPictureContainer = $('#coverImageContainer');
+var profilePictureContainer = $('#profilePictureContainer');
 
-coverPicture.on("load", function () {
-  coverPicture.guillotine('remove');
+coverPictureContainer.on("load", function () {
+  coverPictureContainer.guillotine('remove');
   bindCropperToCover();
 });
 
-profilePicture.on("load", function () {
-  profilePicture.guillotine('remove');
+profilePictureContainer.on("load", function () {
+  profilePictureContainer.guillotine('remove');
   bindCropperToProfilePicture();
 });
 
@@ -101,7 +101,7 @@ function placeCoverImage(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function (e) {
-      coverPicture.attr("src", e.target.result);
+      coverPictureContainer.attr("src", e.target.result);
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -113,7 +113,7 @@ function placeProfilePicture(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function (e) {
-      profilePicture.attr("src", e.target.result);
+      profilePictureContainer.attr("src", e.target.result);
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -121,25 +121,88 @@ function placeProfilePicture(input) {
 }
 
 function bindCropperToCover () {
-  coverPicture.guillotine({width: 1200, height: 300});
-  coverPicture.on('mousewheel', function(event) {
+  coverPictureContainer.guillotine({width: 1200, height: 300});
+  coverPictureContainer.on('mousewheel', function(event) {
     if(event.deltaY == 1)
-      coverPicture.guillotine('zoomIn');
+      coverPictureContainer.guillotine('zoomIn');
     else
-      coverPicture.guillotine('zoomOut');
+      coverPictureContainer.guillotine('zoomOut');
   });
 }
 
 function bindCropperToProfilePicture () {
-  profilePicture.guillotine({width: 500, height: 500});
-  profilePicture.on('mousewheel', function(event) {
+  profilePictureContainer.guillotine({width: 500, height: 500});
+  profilePictureContainer.on('mousewheel', function(event) {
     if(event.deltaY == 1)
-      profilePicture.guillotine('zoomIn');
+      profilePictureContainer.guillotine('zoomIn');
     else
-      profilePicture.guillotine('zoomOut');
+      profilePictureContainer.guillotine('zoomOut');
   });
 }
 
+
+
+function uploadProfilePicture() {
+  var data, xhr;
+
+  data = new FormData();
+  var picture = document.getElementById("profilePictureFile").files[0];
+  data.append( 'profilePicture', picture );
+  data.append( 'pictureData', JSON.stringify(profilePictureContainer.guillotine('getData')));
+
+  xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if(this.status == 200) {
+        alert(xhr.responseText);
+        $("#closePictureFormBtn").click();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#profilePicture").attr("src", e.target.result);
+        };
+        reader.readAsDataURL(picture);
+      } else {
+        alert(xhr.response);
+      }
+    }
+  };
+
+  xhr.open("POST", "picture", true);
+  xhr.send(data);
+
+}
+
+function getRequestObject () {
+  var xmlHttp;
+  try
+  {
+    // Firefox, Opera 8.0+, Safari
+    xmlHttp=new XMLHttpRequest();
+  }
+  catch (e)
+  {
+    // Internet Explorer
+    try
+    {
+      xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch (e)
+    {
+      try
+      {
+        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch (e)
+      {
+        alert("Your browser does not support AJAX!");
+        return false;
+      }
+    }
+  }
+
+  return xmlHttp;
+}
 
 
 

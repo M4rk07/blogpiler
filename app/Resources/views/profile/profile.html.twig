@@ -14,12 +14,12 @@
 
         <div class="row b-section-wrapper b-section b-vertical-center">
             <div class="col-lg-2">
-                <img src="{{ asset('img/mudja-profile.jpg') }}" class="b-profile-card-meta-picture b-section-clickable" onclick="showSetPictureForm()"/>
+                <img src="{{ user.getProfilePicture() }}" class="b-profile-card-meta-picture b-section-clickable" id="profilePicture" onclick="showSetPictureForm()"/>
 
             </div>
             <div class="col-lg-10">
             <span class="b-profile-card-meta-name">
-                Marko Ognjenovic
+                {{ user.getFirstName() }} {{ user.getLastName() }}
             </span>
             </div>
 
@@ -88,7 +88,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="b-modal-title">Choose picture</span>
-                    <button type="button" class="close b-section-clickable" data-dismiss="modal">&times;</button>
+                    <button type="button" id="closePictureFormBtn" class="close b-section-clickable" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -101,18 +101,18 @@
                             </div>
                         </div>
 
-                        <form action="{{ path('login') }}" method="post" style="margin-top: 20px">
+                        <div style="margin-top: 20px">
 
                             <div style="height:0;overflow:hidden">
-                                <input type="file" id="profilePicture" name="coverImage" onchange="placeProfilePicture(this)" />
+                                <input type="file" id="profilePictureFile" name="profilePictureFile" onchange="placeProfilePicture(this)" />
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-12 text-right">
-                                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled b-btn-full-width">Done</button>
+                                    <button type="submit" class="b-btn b-btn-default b-btn-default-filled b-btn-full-width" onclick="uploadProfilePicture()">Done</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
 
                     </div>
                 </div>
