@@ -148,9 +148,9 @@ function uploadProfilePicture() {
   data = new FormData();
   var picture = document.getElementById("profilePictureFile").files[0];
   data.append( 'profilePicture', picture );
-  data.append( 'pictureData', JSON.stringify(profilePictureContainer.guillotine('getData')));
+  data.append( 'pictureMeta', JSON.stringify(profilePictureContainer.guillotine('getData')));
 
-  xhr = new XMLHttpRequest();
+  xhr = getRequestObject();
 
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {

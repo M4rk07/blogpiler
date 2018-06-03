@@ -47,9 +47,9 @@ class ProfileController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $pictureFile = $request->files->get("profilePicture");
-        $pictureData = json_decode($request->request->get('pictureData'));
+        $pictureMeta = json_decode($request->request->get('pictureMeta'));
 
-        $fileName = $fileUploader->uploadProfilePicture($pictureFile, $pictureData,
+        $fileName = $fileUploader->uploadProfilePicture($pictureFile, $pictureMeta,
             $this->get('kernel')->getProjectDir().$this->getParameter('profile_picture_url'), $user->getUserId());
 
         $em = $this->getDoctrine()->getManager();
